@@ -1,0 +1,125 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body {
+  height: 100%;
+}
+
+body {
+  padding-top: 50px;
+  padding-bottom: 20px;
+  background: rgb(216, 216, 216);
+}
+
+.table>thead>tr>th {
+  border-bottom: none;
+}
+
+tr {
+  background: #fff;
+}
+
+tr:nth-child(odd) {
+  background-color: rgb(242, 242, 242);
+  color: #333;
+}
+
+.table>thead:first-child>tr:first-child>td {
+  border-top: 0;
+  background: white;
+}
+.table>tbody>tr>td {
+  padding: 14px 8px;
+}
+
+td {
+  text-align: left;
+  border: none;
+  padding: 10px;
+  color: #333;
+}
+
+th {
+  padding: 10px;
+  border: none;
+  color: #333;
+}
+
+.home th:first-child {
+  visibility: hidden;
+}
+
+#result {
+
+  text-align: left;
+  color: #fff;
+  font-size: 33px;
+  background: #00bcd4;
+  padding: 11px;
+  border-radius: 10px;
+}
+
+table a {
+  color: #ffffff;
+  text-decoration: none;
+  padding: 10px;
+  background: #00BCD4;
+  border-radius: 5px;
+  cursor: pointer;
+  /* border: antiquewhite solid 1px; */
+  margin: 5px;
+}
+
+h2.red {
+  color: rgb(204, 0, 66);
+  padding: 5px 16px;
+}
+
+h2.gray {
+  color: #333;
+  margin-top: 0px;
+  margin-bottom: 30px;
+}
+
+table > tbody > tr:last-child {
+  background: white;
+}
+.mybtnstyle {
+  width: 100%;
+}
+
+.modal-dialog {
+  width: 60%;
+  margin: 15% auto;
+}
+/* look further up*/
+.modal-header {
+  padding-bottom: 38px;
+}
+
+.modal-content {
+  text-align: center;
+  margin: auto;
+}
+
+.dialog-input {
+  width: calc(100% - 33px);
+  padding: 10px;
+  border: #e5e5e5 solid 1px;
+  border-radius: 5px;
+}
+
+.table {
+  margin-bottom: 0px;
+}
+
+table-hover>tbody>tr:hover>td,
+.table-hover>tbody>tr:hover>th {
+  background-color: #8bcbf9;
+  transition: all 1s;
+}
+
+.btn-success:disabled, .btn-success[disabled] {
+  background-color: #777;
+  background-image: none;
+  border: #777;
+}

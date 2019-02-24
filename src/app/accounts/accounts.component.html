@@ -1,0 +1,170 @@
+<section class="account-wrapper" style="margin-top: 50px;">
+  <div class="container" style="box-shadow: 0 0 25px rgba(0, 0, 0, 0.25); padding: 0;">
+
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <td> <h2 class="red">Account List</h2></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <th>Account Number</th>
+        <th>Account Type</th>
+        <th>Balance</th>
+        <th>Withdraw</th>
+        <th>Deposit</th>
+        <th>Account Status</th>
+      </tr>
+      </thead>
+      <tbody>
+
+      <tr *ngFor="let account of accountArr; let i = index;">
+        <td>{{account.account_number}}</td>
+        <td>{{account.account_type}}</td>
+        <td>{{account.balance | currency:'ZAR ' }}</td>
+        <td>
+          <button id="{{i}}" [disabled]="isDisabled" data-toggle="modal" data-target="#withdraw" class="btn btn-success"
+                  (click)="openDialog($event, i)">Withdraw
+          </button>
+        </td>
+        <td>
+          <button [disabled]="isDisabled" data-toggle="modal" data-target="#deposit" class="btn btn-info"
+                  (click)="openDialog($event, i)">Deposit
+          </button>
+        </td>
+        <td>
+          <button [disabled]="isDisabled" data-toggle="modal" data-target="#transaction" class="btn btn-primary"
+                  (click)="openDialog($event, i)">View Transaction History
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td> <h2 class="gray">Balance</h2></td>
+        <td></td>
+        <td><h2 class="gray">ZAR {{balanceAllAccounts}}</h2></td>
+        <td></td>
+        <td></td>
+        <td></td>
+
+      </tr>
+
+      </tbody>
+    </table>
+  </div>
+</section>
+<!-- Withdraw Modal -->
+<div class="modal fade" id="withdraw" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Withdraw</h4>
+      </div>
+      <br>
+      <input type="number"
+             pattern="[0-9]*"
+             placeholder="Enter withdrawal amount"
+             class="dialog-input"
+             id="withdrawAmount" [(ngModel)]="withdrawAmount" (keyup)="isAmountNumeric($event);" onpaste="return false;"
+             ondrop="return false;"/>
+      <span id="withdraw-error" style="color: Red; display: none">* Input only digits please (0 - 9)</span>
+      <br>
+      <br>
+      <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn btn-info btn-lg mybtnstyle" (click)="pullOutMoney()">
+          Withdraw
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<!-- Deposit Modal -->
+<div class="modal fade" id="deposit" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Deposit</h4>
+      </div>
+      <br>
+      <input type="number"
+             pattern="[0-9]*"
+             placeholder="Enter deposit amount"
+             class="dialog-input"
+             id="depositMoney" [(ngModel)]="depositAmount" (keyup)="isAmountNumeric($event);" onpaste="return false;"
+             ondrop="return false;"/>
+      <span id="deposit-error" style="color: Red; display: none">* Input only digits please (0 - 9)</span>
+      <br>
+      <br>
+      <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn btn-info btn-lg mybtnstyle" (click)="pushInMoney()">
+          Deposit
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<!-- Transaction Modal -->
+<div class="modal fade" id="transaction" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Transactions</h4>
+      </div>
+      <br>
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th>Balance History</th>
+          <th>Amount you withdrew/deposited</th>
+          <th>Date you withdrew/deposited money</th>
+          <th>Transaction Type</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let history of singleHistoryArr;">
+          <td>
+            {{history.balanceH}}
+          </td>
+          <td>
+            {{history.amount}}
+          </td>
+          <td>
+            {{history.date}}
+          </td>
+          <td>
+            {{history.transType}}
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <br>
+      <br>
+      <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn btn-info btn-lg mybtnstyle">
+          Close
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
