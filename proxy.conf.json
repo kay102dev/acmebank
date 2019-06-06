@@ -1,0 +1,9 @@
+{
+"/": {
+"target":  {
+"host": "www.greymeta-it.co.za",
+"protocol": "http://"
+},
+"secure": false
+}
+}

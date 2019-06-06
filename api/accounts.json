@@ -1,0 +1,40 @@
+{
+"accounts": [
+{
+"account_number": "6331103626643232",
+"account_type": "cheque",
+"balance": "445.23",
+"history": []
+},
+{
+"account_number": "63311036266422347",
+"account_type": "savings",
+"balance": "45.23",
+"history": []
+},
+{
+"account_number": "6331103626609876",
+"account_type": "savings",
+"balance": "30.23",
+"history": []
+},
+{
+"account_number": "5248117462923511",
+"account_type": "savings",
+"balance": "900.50",
+"history": []
+},
+{
+"account_number": "5248117462995678",
+"account_type": "cheque",
+"balance": "600.30",
+"history": []
+},
+{
+"account_number": "5248117462990909",
+"account_type": "savings",
+"balance": "20.74",
+"history": []
+}
+]
+}
