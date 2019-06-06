@@ -1,6 +1,6 @@
 import {AfterViewInit, Component} from '@angular/core';
-import {AccountUrlService} from './account.url.service';
-import {AccountModel} from './account.model';
+import {AccountUrlService} from "./account.url.service";
+import {AccountModel} from "./account.model";
 
 
 @Component({
@@ -8,7 +8,7 @@ import {AccountModel} from './account.model';
   templateUrl: './accounts.component.html',
   styleUrls: ['./accounts.component.scss']
 })
-export class AccountsComponent implements AfterViewInit {
+export class AccountsComponents implements AfterViewInit {
 
   accountArr: AccountModel[];
   withdrawAmount: number;
@@ -36,7 +36,7 @@ export class AccountsComponent implements AfterViewInit {
   }
 
   checkIfToDisableButton(i) {
-    if (this.accountArr[this.accountSelected].account_type === 'cheque') {
+    if (this.accountArr[this.accountSelected].account_type == "cheque") {
       if (this.accountArr[this.accountSelected].balance <= -500) {
         document.getElementById(i).setAttribute('disabled', 'true');
       } else {
@@ -44,7 +44,7 @@ export class AccountsComponent implements AfterViewInit {
       }
     }
 
-    if (this.accountArr[this.accountSelected].account_type === 'savings') {
+    if (this.accountArr[this.accountSelected].account_type == "savings") {
       if (this.accountArr[this.accountSelected].balance <= 0) {
         document.getElementById(i).setAttribute('disabled', 'true');
       } else {
@@ -56,19 +56,20 @@ export class AccountsComponent implements AfterViewInit {
 
   pullOutMoney() {
     if (this.withdrawAmount != null) {
-      const accountInUse = this.accountArr[this.accountSelected];
+      let accountInUse = this.accountArr[this.accountSelected];
       const remainingAmount = JSON.parse(JSON.stringify(+accountInUse.balance - +this.withdrawAmount));
 
-      if (remainingAmount < 0 && this.accountArr[this.accountSelected].account_type === 'savings') {
-        alert('Cannot withdraw amount below R0,00');
+      if (remainingAmount < 0 && this.accountArr[this.accountSelected].account_type == "savings") {
+        alert("Cannot withdraw amount below R0,00");
         return;
       }
-      if (remainingAmount < -500 && this.accountArr[this.accountSelected].account_type === 'cheque') {
-        alert('Cannot withdraw beyond your overdraft of R500,00');
+      if (remainingAmount < -500 && this.accountArr[this.accountSelected].account_type == "cheque") {
+        alert("Cannot withdraw beyond your overdraft of R500,00");
         return;
-      } else {
+      }
+      else {
         this.accountArr[this.accountSelected].balance = remainingAmount.toFixed(2);
-        alert('Successfully withdrew R' + this.withdrawAmount);
+        alert("Successfully withdrew R" + this.withdrawAmount);
       }
 
       // log each transaction
@@ -86,11 +87,11 @@ export class AccountsComponent implements AfterViewInit {
 
   pushInMoney() {
     if (this.depositAmount != null) {
-      const accountInUse = this.accountArr[this.accountSelected];
+      let accountInUse = this.accountArr[this.accountSelected];
       const remainingAmount = JSON.parse(JSON.stringify(+accountInUse.balance + +this.depositAmount));
 
       this.accountArr[this.accountSelected].balance = remainingAmount.toFixed(2);
-      alert('Successfully deposited R' + this.depositAmount);
+      alert("Successfully deposited R" + this.depositAmount);
 
 
       this.logTransactionHistory('Deposit Transact', this.depositAmount, this.accountArr[this.accountSelected]);
@@ -106,32 +107,32 @@ export class AccountsComponent implements AfterViewInit {
 
   private logTransactionHistory(transactionType, amount, Account: AccountModel): any {
 
-    const today = new Date();
-    const h = today.getHours();
-    const m = today.getMinutes();
-    const s = today.getSeconds();
+    let today = new Date();
+    let h = today.getHours();
+    let m = today.getMinutes();
+    let s = today.getSeconds();
 
-    const y = today.getFullYear();
-    const mo = today.getMonth();
-    const d = today.getDate();
+    let y = today.getFullYear();
+    let mo = today.getMonth();
+    let d = today.getDate();
 
     if (Account) {
       this.accountArr[this.accountSelected].history.push({
-        'transType': transactionType,
-        'balanceH': Account.balance,
-        'amount': amount,
-        'date': 'Time: ' + h + ':' + m + ':' + s + ' | ' + ' Date: ' + d + ' ' + mo + ' ' + y
+        "transType": transactionType,
+        "balanceH": Account.balance,
+        "amount": amount,
+        "date": 'Time: ' + h + ":" + m + ":" + s + ' | ' + ' Date: ' + d + " " + mo + " " + y
       });
     }
   }
 
   calculateBalanceAllAccounts() {
-    const balanceAllAccountsArr = [];
+    let balanceAllAccountsArr = [];
     this.accountArr.forEach((data) => {
       balanceAllAccountsArr.push(data.balance);
     });
     // convert to int array
-    const eachAccBalance = balanceAllAccountsArr.map(function (v) {
+    let eachAccBalance = balanceAllAccountsArr.map(function (v) {
       return parseFloat(v);
     });
     // add amount in array
@@ -144,14 +145,21 @@ export class AccountsComponent implements AfterViewInit {
 
 
   isAmountNumeric(e) {
-    const regex = /^[0-9]*\.?[0-9]*$/;
-    if (!regex.test(e.key)) {
-      document.getElementById('deposit-error').style.display = 'block';
-      document.getElementById('withdraw-error').style.display = 'block';
+    // TODO: Have this validator method as a Directive class
+    let specialKeys = [];
+    specialKeys.push(8); //Backspace
+    let keyCode = e.which ? e.which : e.keyCode;
+    let isValueNumber = ((keyCode >= 48 && keyCode <= 57) || specialKeys.indexOf(keyCode) != -1 || keyCode === 190);
+
+    // TODO: create pure function to handle different dialogs at scale
+    document.getElementById("deposit-error").style.display = isValueNumber ? "none" : "block";
+    document.getElementById("withdraw-error").style.display = isValueNumber ? "none" : "block";
+
+    // TODO: Not allow more than 2 decimal points in withdrawAmount and deposit amount
+
+    if (!isValueNumber) {
       this.withdrawAmount = 0;
-    } else {
-      document.getElementById('deposit-error').style.display = 'none';
-      document.getElementById('withdraw-error').style.display = 'none';
     }
+    return isValueNumber;
   }
 }
